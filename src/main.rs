@@ -6,8 +6,8 @@ use std::{collections::VecDeque, f64::consts::PI};
 use rand::Rng;
 
 const TILE_SIZE: f32 = 24.;
-const MARGIN_RATIO: f32 = 12.;
-const GRID_SIZE: i32 = 20;
+const MARGIN_RATIO: f32 = 16.;
+const GRID_SIZE: i32 = 30;
 const STARTING_POS_X: i32 = 0;
 const STARTING_POS_Y: i32 = 10;
 const STARTING_DIRECTION: Direction = Direction::Right;
@@ -235,7 +235,7 @@ impl event::EventHandler<ggez::GameError> for MainState {
                         v_align: graphics::TextAlign::Middle,
                     })
                     .set_font("Retro font");
-                canvas.draw(&text, Vec2::new(10. * TILE_SIZE, 10. * TILE_SIZE))
+                canvas.draw(&text, Vec2::new((GRID_SIZE as f32 / 2.) * TILE_SIZE, (GRID_SIZE as f32 / 2.) * TILE_SIZE))
             },
             GamePhase::Play => {
                 for segment in self.snake.segments.iter() {
@@ -273,7 +273,7 @@ impl event::EventHandler<ggez::GameError> for MainState {
                         v_align: graphics::TextAlign::Middle,
                     })
                     .set_font("Retro font");
-                canvas.draw(&text, Vec2::new(10. * TILE_SIZE, 10. * TILE_SIZE))
+                canvas.draw(&text, Vec2::new((GRID_SIZE as f32 / 2.) * TILE_SIZE, (GRID_SIZE as f32 / 2.) * TILE_SIZE))
             },
         }
 
