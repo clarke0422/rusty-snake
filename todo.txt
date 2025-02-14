@@ -1,0 +1,5 @@
+Separate classes as different files
+Reformat position as vector
+Reformat n snakes?
+Online multiplayer
+Re-implement single player

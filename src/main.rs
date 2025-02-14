@@ -14,7 +14,11 @@ const HOST_STARTING_POS_Y: i32 = 10;
 const HOST_STARTING_DIRECTION: Direction = Direction::Right;
 // const HOST_STARTING_COLOR: (f32, f32, f32) = (0., 1., 1.);
 const HOST_COLOR_FN: fn(usize) -> (f32, f32, f32) = |n| -> (f32, f32, f32) {
-    (((f64::cos((n as f64 / 5.) + PI) + 1.) / 2.) as f32, ((f64::cos(n as f64 / 5.) + 1.) / 2.) as f32, 1.)
+    (
+        ((f64::cos((n as f64 / 5.) + PI) + 1.) / 2.) as f32,
+        ((f64::cos(n as f64 / 5.) + 1.) / 2.) as f32,
+        1.,
+    )
 };
 
 const GUEST_STARTING_POSITION_X: i32 = 15;
@@ -22,7 +26,11 @@ const GUEST_STARTING_POS_Y: i32 = 20;
 const GUEST_STARTING_DIRECTION: Direction = Direction::Left;
 // const GUEST_STARTING_COLOR: (f32, f32, f32) = (1., 1., 0.);
 const GUEST_COLOR_FN: fn(usize) -> (f32, f32, f32) = |n| -> (f32, f32, f32) {
-    (((f64::cos(n as f64 / 5.) + 1.) / 2.) as f32, 1., ((f64::cos((n as f64 / 5.) + PI) + 1.) / 4.) as f32)
+    (
+        ((f64::cos(n as f64 / 5.) + 1.) / 2.) as f32,
+        1.,
+        ((f64::cos((n as f64 / 5.) + PI) + 1.) / 4.) as f32,
+    )
 };
 
 const FRUIT_COLOR: (u8, u8, u8) = (255, 20, 147);
