@@ -127,25 +127,16 @@ impl event::EventHandler<ggez::GameError> for MainState {
             },
             GamePhase::Play => {
                 for segment in self.host_player.snake.segments.iter().chain(self.guest_player.snake.segments.iter()) {
-                    let x_offset;
-                    let y_offset;
+                    let mut x_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
+                    let mut y_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
                     match segment.facing {
-                        Direction::Up => {
-                            x_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
-                            y_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
-                        }
-                        Direction::Left => {
-                            x_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
-                            y_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
-                        }
                         Direction::Down => {
-                            x_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
-                            y_offset = -(cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
+                            y_offset *= -1.;
                         }
                         Direction::Right => {
-                            x_offset = -(cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
-                            y_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
+                            x_offset *= -1.;
                         }
+                        _ => {}
                     }
                     canvas.draw(&segment.mesh, Vec2::new((segment.pos.0 as f32 * cn::TILE_SIZE) + x_offset, (segment.pos.1 as f32 * cn::TILE_SIZE) + y_offset));
                 }
