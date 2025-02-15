@@ -5,8 +5,7 @@ pub const TILE_SIZE: f32 = 24.;
 pub const MARGIN_RATIO: f32 = 16.;
 pub const GRID_SIZE: i32 = 30;
 
-pub const HOST_STARTING_POSITION_X: i32 = 15;
-pub const HOST_STARTING_POS_Y: i32 = 10;
+pub const HOST_STARTING_POSITION: (i32, i32) = (15, 10);
 pub const HOST_STARTING_DIRECTION: Direction = Direction::Right;
 pub const HOST_COLOR_FN: fn(usize) -> (f32, f32, f32) = |n| -> (f32, f32, f32) {
     (
@@ -16,8 +15,7 @@ pub const HOST_COLOR_FN: fn(usize) -> (f32, f32, f32) = |n| -> (f32, f32, f32) {
     )
 };
 
-pub const GUEST_STARTING_POSITION_X: i32 = 15;
-pub const GUEST_STARTING_POS_Y: i32 = 20;
+pub const GUEST_STARTING_POSITION: (i32, i32) = (15, 20);
 pub const GUEST_STARTING_DIRECTION: Direction = Direction::Left;
 pub const GUEST_COLOR_FN: fn(usize) -> (f32, f32, f32) = |n| -> (f32, f32, f32) {
     (

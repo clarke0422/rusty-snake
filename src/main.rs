@@ -40,8 +40,8 @@ struct MainState {
 impl MainState {
     fn new(ctx: &mut Context) -> GameResult<MainState> {
 
-        let host_snake = Snake::new(ctx, cn::HOST_STARTING_POSITION_X, cn::HOST_STARTING_POS_Y, cn::HOST_STARTING_DIRECTION, cn::HOST_COLOR_FN)?;
-        let guest_snake = Snake::new(ctx, cn::GUEST_STARTING_POSITION_X, cn::GUEST_STARTING_POS_Y, cn::GUEST_STARTING_DIRECTION, cn::GUEST_COLOR_FN)?;
+        let host_snake = Snake::new(ctx, cn::HOST_STARTING_POSITION, cn::HOST_STARTING_DIRECTION, cn::HOST_COLOR_FN)?;
+        let guest_snake = Snake::new(ctx, cn::GUEST_STARTING_POSITION, cn::GUEST_STARTING_DIRECTION, cn::GUEST_COLOR_FN)?;
 
         let host_player = PlayerState {
             input_direction: cn::HOST_STARTING_DIRECTION,
@@ -74,31 +74,31 @@ impl event::EventHandler<ggez::GameError> for MainState {
                 self.host_player.snake.push(ctx, self.host_player.input_direction)?;
                 self.guest_player.snake.push(ctx, self.guest_player.input_direction)?;
 
-                if !(self.host_player.snake.head_pos_x == self.fruit.pos_x && self.host_player.snake.head_pos_y == self.fruit.pos_y){
+                if !(self.host_player.snake.head_pos == self.fruit.pos){
                     self.host_player.snake.pull();
                 }
-                if !(self.guest_player.snake.head_pos_x == self.fruit.pos_x && self.guest_player.snake.head_pos_y == self.fruit.pos_y){
+                if !(self.guest_player.snake.head_pos == self.fruit.pos){
                     self.guest_player.snake.pull();
                 }
 
-                if (self.host_player.snake.head_pos_x == self.fruit.pos_x && self.host_player.snake.head_pos_y == self.fruit.pos_y)
-                || (self.guest_player.snake.head_pos_x == self.fruit.pos_x && self.guest_player.snake.head_pos_y == self.fruit.pos_y) {
+                if (self.host_player.snake.head_pos == self.fruit.pos)
+                || (self.guest_player.snake.head_pos == self.fruit.pos) {
                     self.fruit.reposition((&self.host_player.snake, &self.guest_player.snake));
                 }
 
-                if Snake::check_out_of_bounds(self.host_player.snake.head_pos_x, self.host_player.snake.head_pos_y)
-                || Snake::check_out_of_bounds(self.guest_player.snake.head_pos_x, self.guest_player.snake.head_pos_y)
+                if Snake::check_out_of_bounds(self.host_player.snake.head_pos)
+                || Snake::check_out_of_bounds(self.guest_player.snake.head_pos)
                 || self.host_player.snake.check_self_collision()
-                || self.host_player.snake.check_collision(self.guest_player.snake.head_pos_x, self.guest_player.snake.head_pos_y)
+                || self.host_player.snake.check_collision(self.guest_player.snake.head_pos)
                 || self.guest_player.snake.check_self_collision()
-                || self.guest_player.snake.check_collision(self.host_player.snake.head_pos_x, self.host_player.snake.head_pos_y) {
+                || self.guest_player.snake.check_collision(self.host_player.snake.head_pos) {
                     self.phase = GamePhase::Over;
 
                     self.host_player.input_direction = cn::HOST_STARTING_DIRECTION;
-                    self.host_player.snake = Snake::new(ctx, cn::HOST_STARTING_POSITION_X, cn::HOST_STARTING_POS_Y, cn::HOST_STARTING_DIRECTION, cn::HOST_COLOR_FN)?;
+                    self.host_player.snake = Snake::new(ctx, cn::HOST_STARTING_POSITION, cn::HOST_STARTING_DIRECTION, cn::HOST_COLOR_FN)?;
                     
                     self.guest_player.input_direction = cn::GUEST_STARTING_DIRECTION;
-                    self.guest_player.snake = Snake::new(ctx, cn::GUEST_STARTING_POSITION_X, cn::GUEST_STARTING_POS_Y, cn::GUEST_STARTING_DIRECTION, cn::GUEST_COLOR_FN)?;
+                    self.guest_player.snake = Snake::new(ctx, cn::GUEST_STARTING_POSITION, cn::GUEST_STARTING_DIRECTION, cn::GUEST_COLOR_FN)?;
 
                     self.fruit = Fruit::new(ctx)?;
                 }
@@ -147,9 +147,9 @@ impl event::EventHandler<ggez::GameError> for MainState {
                             y_offset = (cn::TILE_SIZE / cn::MARGIN_RATIO) / 2.;
                         }
                     }
-                    canvas.draw(&segment.mesh, Vec2::new((segment.pos_x as f32 * cn::TILE_SIZE) + x_offset, (segment.pos_y as f32 * cn::TILE_SIZE) + y_offset));
+                    canvas.draw(&segment.mesh, Vec2::new((segment.pos.0 as f32 * cn::TILE_SIZE) + x_offset, (segment.pos.1 as f32 * cn::TILE_SIZE) + y_offset));
                 }
-                canvas.draw(&self.fruit.mesh, Vec2::new(self.fruit.pos_x as f32 * cn::TILE_SIZE, self.fruit.pos_y as f32 * cn::TILE_SIZE));
+                canvas.draw(&self.fruit.mesh, Vec2::new(self.fruit.pos.0 as f32 * cn::TILE_SIZE, self.fruit.pos.1 as f32 * cn::TILE_SIZE));
             }
             GamePhase::Over => {
                 let mut text: Text = Text::new("GAME OVER");
