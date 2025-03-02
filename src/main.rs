@@ -303,7 +303,7 @@ pub fn main() -> GameResult {
             is_server = true;
         }
         "c" => {
-            stream = TcpStream::connect("127.0.0.1:7878").unwrap();
+            stream = TcpStream::connect("192.168.0.45:7878").unwrap();
             println!("Connection established");
 
             let mut buf = [0; 8];
